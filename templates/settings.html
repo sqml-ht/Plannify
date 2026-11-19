@@ -21,7 +21,7 @@
     <script src="{{ url_for('static', filename='js/settings-core.js') }}"></script>
 </head>
 
-<body>
+<body data-tasks='{{ initial_tasks|tojson }}'>
     <div class="app">
 
         <!-- Mobile top bar -->
@@ -136,7 +136,7 @@
 
                 <section class="card">
                     <h2 class="card-title">Data &amp; reset</h2>
-                    <p class="card-sub">Tasks are stored in this browser for now.</p>
+                    <p class="card-sub">Tasks are stored in the Oracle database.</p>
                     <div class="btn-row">
                         <button type="button" class="btn btn-ghost" id="sampleBtn">Load sample tasks</button>
                         <button type="button" class="btn btn-danger" id="clearBtn">Delete all tasks</button>

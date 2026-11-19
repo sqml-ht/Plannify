@@ -1,8 +1,7 @@
-/* Plannify shared helpers: task storage (localStorage for now), formatting, toasts, sidebar. */
+/* Plannify shared helpers: task storage (Oracle via Flask API), formatting, toasts, sidebar. */
 (function () {
   'use strict';
 
-  var KEY = 'plannify.tasks';
   var PRIORITY_RANK = { high: 0, medium: 1, low: 2 };
   var PRIORITY_LABEL = { high: 'High', medium: 'Medium', low: 'Low' };
 
@@ -36,17 +35,38 @@
     return fmtDate(s);
   }
 
-  /* ---------- task storage ---------- */
-  function load() {
-    try {
-      var v = JSON.parse(localStorage.getItem(KEY));
-      return Array.isArray(v) ? v : [];
-    } catch (e) { return []; }
+  /* ---------- task storage (Oracle, via the Flask API) ---------- */
+  // The server renders the current tasks into <body data-tasks> on every page load.
+  // Reads come from this in-memory copy; every change updates it instantly and is
+  // then saved to the database in the background.
+  var cache = [];
+  try {
+    var parsed = JSON.parse(document.body.dataset.tasks || '[]');
+    if (Array.isArray(parsed)) cache = parsed;
+  } catch (e) { console.error('Plannify: could not read tasks from the page', e); }
+
+  function load() { return cache.slice(); }
+
+  function request(method, url, body) {
+    return fetch(url, {
+      method: method,
+      headers: { 'Content-Type': 'application/json' },
+      body: body === undefined ? undefined : JSON.stringify(body),
+      keepalive: true            // lets the save finish even if the page navigates away
+    }).then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+    }).catch(function (e) {
+      console.error('Plannify: could not save to the database', e);
+      toast('Could not save to the database');
+      return resync();           // show what the database really has
+    });
   }
 
-  function persist(list) {
-    try { localStorage.setItem(KEY, JSON.stringify(list)); } catch (e) {}
-    changed();
+  function resync() {
+    return fetch('/api/tasks')
+      .then(function (r) { return r.json(); })
+      .then(function (list) { cache = list; changed(); })
+      .catch(function () {});
   }
 
   function changed() {
@@ -69,29 +89,33 @@
   function getTask(id) { return load().filter(function (t) { return t.id === id; })[0]; }
 
   function addTask(data) {
-    var list = load();
     var t = Object.assign({ id: uid(), completed: false, createdAt: Date.now() }, clean(data));
-    list.push(t);
-    persist(list);
+    cache.push(t);
+    changed();
+    request('POST', '/api/tasks', t);
     return t;
   }
 
   function addMany(items) {
-    var list = load();
-    items.forEach(function (d) {
-      list.push(Object.assign({ id: uid(), completed: !!d.completed, createdAt: Date.now() }, clean(d)));
+    var made = items.map(function (d) {
+      return Object.assign({ id: uid(), completed: !!d.completed, createdAt: Date.now() }, clean(d));
     });
-    persist(list);
+    cache = cache.concat(made);
+    changed();
+    request('POST', '/api/tasks/bulk', made);
   }
 
   function updateTask(id, patch) {
-    var list = load().map(function (t) {
+    var updated;
+    cache = cache.map(function (t) {
       if (t.id !== id) return t;
       var next = Object.assign({}, t, clean(Object.assign({}, t, patch)));
       if (patch.completed !== undefined) next.completed = !!patch.completed;
+      updated = next;
       return next;
     });
-    persist(list);
+    changed();
+    if (updated) request('PUT', '/api/tasks/' + encodeURIComponent(id), updated);
   }
 
   function toggleTask(id) {
@@ -100,10 +124,16 @@
   }
 
   function removeTask(id) {
-    persist(load().filter(function (t) { return t.id !== id; }));
+    cache = cache.filter(function (t) { return t.id !== id; });
+    changed();
+    request('DELETE', '/api/tasks/' + encodeURIComponent(id));
   }
 
-  function clearAll() { persist([]); }
+  function clearAll() {
+    cache = [];
+    changed();
+    request('DELETE', '/api/tasks');
+  }
 
   /* ---------- ordering / status ---------- */
   function compare(a, b) {
@@ -173,7 +203,6 @@
     updateBadge();
   }
 
-  window.addEventListener('storage', function (e) { if (e.key === KEY) changed(); });
   document.addEventListener('DOMContentLoaded', initShell);
 
   window.Plannify = {

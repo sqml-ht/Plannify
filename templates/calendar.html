@@ -23,7 +23,7 @@
     <script src="{{ url_for('static', filename='js/settings-core.js') }}"></script>
 </head>
 
-<body>
+<body data-tasks='{{ initial_tasks|tojson }}'>
     <div class="app">
 
         <!-- Mobile top bar -->
