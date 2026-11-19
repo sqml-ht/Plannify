@@ -1,0 +1,185 @@
+/* ---------- Vanilla ---------- */
+:root,
+[data-theme="vanilla"][data-mode="light"] {
+  /* palette: #dae3f3 lavender · #665687 dusty grape · #190933 dark amethyst · #edeba0 vanilla custard · #e0d8f3 lavender 2 */
+  --bg: #dae3f3;
+  --card: #f5f2fc;
+  --card-alt: #e0d8f3;
+  --text: #190933;
+  --muted: #665687;
+  --border: #c9c4e6;
+  --primary: #665687;
+  --on-primary: #ffffff;
+  --accent: #edeba0;
+  --on-accent: #190933;
+  --brand: #665687;
+  --side-bg: #190933;
+  --side-text: #dae3f3;
+  --side-active-bg: #edeba0;
+  --side-active-text: #190933;
+}
+[data-theme="vanilla"][data-mode="dark"] {
+  --bg: #120626;
+  --card: #1f0f3d;
+  --card-alt: #2b1a50;
+  --text: #dae3f3;
+  --muted: #b8acd8;
+  --border: #3b2a66;
+  --primary: #665687;
+  --on-primary: #ffffff;
+  --accent: #edeba0;
+  --on-accent: #190933;
+  --brand: #edeba0;
+  --side-bg: #190933;
+  --side-text: #e0d8f3;
+  --side-active-bg: #edeba0;
+  --side-active-text: #190933;
+}
+
+/* ---------- Cool Steel (default) ---------- */
+[data-theme="coolsteel"][data-mode="light"] {
+  /* #1c2321 carbon black · #7d98a1 cool steel · #5e6572 blue slate · #a9b4c2 powder blue · #eef1ef platinum */
+  --bg: #eef1ef;
+  --card: #ffffff;
+  --card-alt: #e1e7e5;
+  --text: #1c2321;
+  --muted: #5e6572;
+  --border: #d3dad7;
+  --primary: #5e6572;
+  --on-primary: #ffffff;
+  --accent: #a9b4c2;
+  --on-accent: #1c2321;
+  --brand: #5e6572;
+  --side-bg: #1c2321;
+  --side-text: #a9b4c2;
+  --side-active-bg: #7d98a1;
+  --side-active-text: #1c2321;
+}
+[data-theme="coolsteel"][data-mode="dark"] {
+  --bg: #151a19;
+  --card: #1c2321;
+  --card-alt: #28312f;
+  --text: #eef1ef;
+  --muted: #a9b4c2;
+  --border: #34403c;
+  --primary: #7d98a1;
+  --on-primary: #1c2321;
+  --accent: #7d98a1;
+  --on-accent: #1c2321;
+  --brand: #a9b4c2;
+  --side-bg: #101514;
+  --side-text: #a9b4c2;
+  --side-active-bg: #7d98a1;
+  --side-active-text: #1c2321;
+}
+
+/* ---------- Lime Blue ---------- */
+[data-theme="limeblue"][data-mode="light"] {
+  /* #7d84b2 lavender grey · #8e9dcc wisteria blue · #d9dbf1 lavender · #f9f9ed ivory · #dbf4a7 lime cream */
+  --bg: #f9f9ed;
+  --card: #ffffff;
+  --card-alt: #d9dbf1;
+  --text: #272a45;
+  --muted: #5f6694;
+  --border: #dcdef0;
+  --primary: #6b73a5;
+  --on-primary: #ffffff;
+  --accent: #dbf4a7;
+  --on-accent: #272a45;
+  --brand: #6b73a5;
+  --side-bg: #6b73a5;
+  --side-text: #f9f9ed;
+  --side-active-bg: #dbf4a7;
+  --side-active-text: #272a45;
+}
+[data-theme="limeblue"][data-mode="dark"] {
+  --bg: #1b1e33;
+  --card: #262a46;
+  --card-alt: #323759;
+  --text: #f9f9ed;
+  --muted: #b8bde0;
+  --border: #3d4268;
+  --primary: #8e9dcc;
+  --on-primary: #1b1e33;
+  --accent: #dbf4a7;
+  --on-accent: #1b1e33;
+  --brand: #dbf4a7;
+  --side-bg: #151729;
+  --side-text: #d9dbf1;
+  --side-active-bg: #dbf4a7;
+  --side-active-text: #1b1e33;
+}
+
+/* ---------- Pastel Pink ---------- */
+[data-theme="pastelpink"][data-mode="light"] {
+  /* #d8e2dc alabaster grey · #ffffff · #ffcad4 pastel pink · #f4acb7 cherry blossom · #9d8189 dusty mauve */
+  --bg: #d8e2dc;
+  --card: #ffffff;
+  --card-alt: #ffe3e8;
+  --text: #3d2c31;
+  --muted: #7d646c;
+  --border: #ecd7dc;
+  --primary: #f4acb7;
+  --on-primary: #3d2c31;
+  --accent: #ffcad4;
+  --on-accent: #3d2c31;
+  --brand: #9d8189;
+  --side-bg: #8c7078;
+  --side-text: #ffffff;
+  --side-active-bg: #ffcad4;
+  --side-active-text: #3d2c31;
+}
+[data-theme="pastelpink"][data-mode="dark"] {
+  --bg: #241a1e;
+  --card: #31252a;
+  --card-alt: #3f3036;
+  --text: #ffe9ee;
+  --muted: #d9bcc4;
+  --border: #4d3b42;
+  --primary: #f4acb7;
+  --on-primary: #2a1d22;
+  --accent: #ffcad4;
+  --on-accent: #2a1d22;
+  --brand: #ffcad4;
+  --side-bg: #1b1317;
+  --side-text: #e9cfd5;
+  --side-active-bg: #f4acb7;
+  --side-active-text: #2a1d22;
+}
+
+/* ---------- Dusty Olive ---------- */
+[data-theme="dustyolive"][data-mode="light"] {
+  /* #1d1e18 carbon black · #6b8f71 dusty olive · #aad2ba celadon · #d9fff5 frozen water · #b9f5d8 celadon 2 */
+  --bg: #d9fff5;
+  --card: #f6fffc;
+  --card-alt: #c9f3df;
+  --text: #1d1e18;
+  --muted: #4a6a51;
+  --border: #b6dccb;
+  --primary: #6b8f71;
+  --on-primary: #12140f;
+  --accent: #b9f5d8;
+  --on-accent: #1d1e18;
+  --brand: #4a6a51;
+  --side-bg: #1d1e18;
+  --side-text: #aad2ba;
+  --side-active-bg: #aad2ba;
+  --side-active-text: #1d1e18;
+}
+[data-theme="dustyolive"][data-mode="dark"] {
+  --bg: #151610;
+  --card: #1d1e18;
+  --card-alt: #2a2c22;
+  --text: #d9fff5;
+  --muted: #aad2ba;
+  --border: #373a2c;
+  --primary: #6b8f71;
+  --on-primary: #12140f;
+  --accent: #b9f5d8;
+  --on-accent: #1d1e18;
+  --brand: #aad2ba;
+  --side-bg: #0f100b;
+  --side-text: #aad2ba;
+  --side-active-bg: #aad2ba;
+  --side-active-text: #1d1e18;
+}

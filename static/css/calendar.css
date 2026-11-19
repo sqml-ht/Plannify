@@ -1,0 +1,365 @@
+.cal-card {
+  padding: 1.1rem;
+}
+
+.cal-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.6rem;
+}
+.cal-nav {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+.cal-nav h2 {
+  margin: 0 0 0 0.6rem;
+  font-size: 1.3rem;
+}
+
+.cal-legend {
+  display: flex;
+  gap: 1rem;
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 0.9rem;
+}
+.cal-legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+  background: var(--pc);
+  display: inline-block;
+}
+
+/* Task chip (month cells + all-day row) */
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 0.15rem 0.45rem;
+  border: 0;
+  border-left: 3px solid var(--pc);
+  border-radius: 0.35rem;
+  text-align: left;
+  cursor: pointer;
+  background: color-mix(in srgb, var(--pc) 18%, var(--card));
+  color: var(--text);
+  font-size: 0.75rem;
+  line-height: 1.35;
+  overflow: hidden;
+  transition: filter 0.15s;
+}
+.chip:hover {
+  filter: brightness(0.95);
+}
+[data-mode="dark"] .chip:hover {
+  filter: brightness(1.15);
+}
+.chip .ct {
+  font-weight: 700;
+  flex: none;
+  opacity: 0.8;
+}
+.chip .cn {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: 500;
+}
+.chip.done {
+  opacity: 0.55;
+}
+.chip.done .cn {
+  text-decoration: line-through;
+}
+
+/* ---------- Month view ---------- */
+.m-head {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+.m-head div {
+  padding: 0.4rem 0.5rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.m-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+.m-day {
+  min-height: 7.6rem;
+  padding: 0.3rem 0.35rem 0.4rem;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+.m-day.other {
+  background: color-mix(in srgb, var(--card-alt) 45%, transparent);
+}
+.m-day.other .m-num {
+  color: var(--muted);
+  opacity: 0.7;
+}
+.m-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.m-num {
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  border: 0;
+  background: transparent;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: var(--text);
+}
+.m-num:hover {
+  background: var(--card-alt);
+}
+.m-day.today .m-num {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+.m-add {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  text-decoration: none;
+  color: var(--muted);
+  font-weight: 700;
+  opacity: 0;
+  transition:
+    opacity 0.15s,
+    background 0.15s;
+}
+.m-day:hover .m-add,
+.m-add:focus-visible {
+  opacity: 1;
+}
+.m-add:hover {
+  background: var(--card-alt);
+}
+.chips {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.more {
+  border: 0;
+  background: transparent;
+  text-align: left;
+  padding: 0.05rem 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--brand);
+  cursor: pointer;
+  border-radius: 0.3rem;
+}
+.more:hover {
+  background: var(--card-alt);
+}
+
+/* ---------- Week / Day view ---------- */
+.tg-wrap {
+  max-height: 68vh;
+  overflow: auto;
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background: var(--card);
+}
+.tg-row {
+  display: grid;
+  min-width: 0;
+}
+.tg-wrap[data-n="7"] .tg-row {
+  min-width: 46rem;
+}
+
+.tg-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+}
+.tg-dh {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem 0 0.3rem;
+  border-left: 1px solid var(--border);
+}
+.tg-dh .dow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.tg-dh .dnum {
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  border: 0;
+  background: transparent;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text);
+}
+.tg-dh .dnum:hover {
+  background: var(--card-alt);
+}
+.tg-dh.today .dow {
+  color: var(--brand);
+}
+.tg-dh.today .dnum {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+
+.tg-all {
+  border-top: 1px solid var(--border);
+}
+.tg-label {
+  font-size: 0.68rem;
+  color: var(--muted);
+  padding: 0.5rem 0.4rem 0 0;
+  text-align: right;
+  font-weight: 600;
+}
+.tg-allcell {
+  border-left: 1px solid var(--border);
+  padding: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-height: 1.9rem;
+  min-width: 0;
+}
+
+.tg-gutter {
+  position: relative;
+}
+.tg-gutter span {
+  position: absolute;
+  right: 0.5rem;
+  transform: translateY(-50%);
+  font-size: 0.68rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.tg-col {
+  position: relative;
+  border-left: 1px solid var(--border);
+  min-width: 0;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(var(--hour) - 1px),
+    var(--border) calc(var(--hour) - 1px),
+    var(--border) var(--hour)
+  );
+}
+.tg-col.today {
+  background-color: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.ev {
+  position: absolute;
+  padding: 0.2rem 0.45rem;
+  border: 0;
+  border-left: 3px solid var(--pc);
+  border-radius: 0.4rem;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--pc) 24%, var(--card));
+  color: var(--text);
+  font-size: 0.75rem;
+  line-height: 1.3;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+.ev:hover {
+  z-index: 3;
+  filter: brightness(0.96);
+}
+[data-mode="dark"] .ev:hover {
+  filter: brightness(1.15);
+}
+.ev .et {
+  display: block;
+  font-weight: 700;
+  opacity: 0.8;
+  font-size: 0.68rem;
+}
+.ev .en {
+  font-weight: 600;
+}
+.ev.done {
+  opacity: 0.55;
+}
+.ev.done .en {
+  text-decoration: line-through;
+}
+
+.now {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--p-high);
+  z-index: 2;
+  pointer-events: none;
+}
+.now::before {
+  content: "";
+  position: absolute;
+  left: -5px;
+  top: -4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--p-high);
+}
+
+@media (max-width: 700px) {
+  .m-day {
+    min-height: 5.2rem;
+  }
+  .chip .ct {
+    display: none;
+  }
+  .cal-nav h2 {
+    font-size: 1.05rem;
+    margin-left: 0.3rem;
+  }
+}

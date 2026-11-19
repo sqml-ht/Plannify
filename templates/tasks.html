@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="vanilla" data-mode="light">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>To-Do List | Plannify</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&family=Merriweather:wght@400;700&family=Nunito:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/themes.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+
+
+    <script src="{{ url_for('static', filename='js/settings-core.js') }}"></script>
+</head>
+
+<body>
+    <div class="app">
+
+        <!-- Mobile top bar -->
+        <header class="topbar">
+            <button class="icon-btn topbar-btn" id="menuBtn" aria-label="Open menu" aria-controls="sidebar">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <path d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+            <span class="topbar-title">Plannify</span>
+        </header>
+        <div class="scrim" id="scrim"></div>
+
+        <!-- Side navigation -->
+        <aside class="sidebar" id="sidebar">
+            <a class="brand" href="add-task.html">
+                <span class="brand-mark">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M5 13l4 4L19 7" />
+                    </svg>
+                </span>
+                Plannify
+            </a>
+
+            <nav class="nav" aria-label="Main">
+                <a href="add-task.html" class="">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="9" />
+                        <path d="M12 8v8M8 12h8" />
+                    </svg>
+                    Add Task
+                </a>
+                <a href="tasks.html" class="active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M9 6h11M9 12h11M9 18h11" />
+                        <path d="M3.5 6l1.2 1.2L6.8 5M3.5 12l1.2 1.2L6.8 11M3.5 18l1.2 1.2L6.8 17" />
+                    </svg>
+                    To-Do List
+                    <span class="nav-badge" data-pending-count hidden>0</span>
+                </a>
+                <a href="calendar.html" class="">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <rect x="3" y="4.5" width="18" height="16" rx="3" />
+                        <path d="M3 10h18M8 2.5v4M16 2.5v4" />
+                    </svg>
+                    Calendar
+                </a>
+                <a href="settings.html" class="">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M4 7h10M18 7h2M4 17h2M10 17h10" />
+                        <circle cx="16" cy="7" r="2" />
+                        <circle cx="8" cy="17" r="2" />
+                    </svg>
+                    Settings
+                </a>
+            </nav>
+
+            <div class="side-foot">
+                <span class="side-foot-label">Today</span>
+                <strong id="sideDate">&nbsp;</strong>
+            </div>
+        </aside>
+
+        <!-- Page content -->
+        <main class="main">
+
+            <div class="page-head page-head-row">
+                <div>
+                    <h1>To-Do List</h1>
+                    <p id="tasksSummary">Everything on your plate in one place.</p>
+                </div>
+                <a class="btn btn-primary" href="add-task.html">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.4"
+                        stroke-linecap="round">
+                        <path d="M12 5v14M5 12h14" />
+                    </svg>
+                    New task
+                </a>
+            </div>
+
+            <div class="toolbar">
+                <div class="seg" id="filterSeg" role="tablist" aria-label="Filter tasks">
+                    <button type="button" data-filter="all" class="active">All</button>
+                    <button type="button" data-filter="pending">Pending</button>
+                    <button type="button" data-filter="completed">Completed</button>
+                </div>
+                <div class="toolbar-right">
+                    <input type="search" id="taskSearch" class="search" placeholder="Search tasks…"
+                        aria-label="Search tasks">
+                    <select id="taskSort" aria-label="Sort tasks">
+                        <option value="due">Sort: Due date</option>
+                        <option value="priority">Sort: Priority</option>
+                        <option value="name">Sort: Name</option>
+                        <option value="newest">Sort: Recently added</option>
+                    </select>
+                </div>
+            </div>
+
+            <section class="task-section" id="pendingSection">
+                <h2 class="section-title">Pending <span class="count" id="pendingCount">0</span></h2>
+                <ul class="task-list" id="pendingList"></ul>
+            </section>
+
+            <section class="task-section" id="completedSection">
+                <h2 class="section-title">Completed <span class="count" id="completedCount">0</span></h2>
+                <ul class="task-list" id="completedList"></ul>
+            </section>
+
+            <div class="empty" id="tasksEmpty" hidden>
+                <svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="currentColor" stroke-width="1.6"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="4" y="3" width="16" height="18" rx="3" />
+                    <path d="M8 8h8M8 12h8M8 16h5" />
+                </svg>
+                <h3>No tasks here yet</h3>
+                <p>Add your first task to start planning your day.</p>
+                <a class="btn btn-primary" href="add.html">Add a task</a>
+            </div>
+
+        </main>
+    </div>
+
+    <div class="toast-wrap" id="toastWrap" aria-live="polite"></div>
+
+    <dialog class="modal" id="editDialog" aria-labelledby="editTitle">
+        <form method="dialog" id="editForm" novalidate>
+            <div class="modal-head">
+                <h2 id="editTitle">Edit task</h2>
+                <button type="button" class="icon-btn" data-close aria-label="Close">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        <path d="M6 6l12 12M18 6L6 18" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="field">
+                    <label for="edit-name">Task name</label>
+                    <input id="edit-name" name="taskName" type="text" maxlength="120"
+                        placeholder="e.g. Finish project report" required autocomplete="off">
+                </div>
+
+                <div class="field-row">
+                    <div class="field">
+                        <label for="edit-date">Due date</label>
+                        <input id="edit-date" name="date" type="date" required>
+                    </div>
+                    <div class="field">
+                        <label for="edit-time">Time <span class="opt">(optional)</span></label>
+                        <input id="edit-time" name="time" type="time">
+                    </div>
+                </div>
+
+                <fieldset class="field">
+                    <legend>Priority</legend>
+                    <div class="prio-group">
+                        <label class="prio p-low"><input type="radio" name="priority"
+                                value="low"><span>Low</span></label>
+                        <label class="prio p-medium"><input type="radio" name="priority" value="medium"
+                                checked><span>Medium</span></label>
+                        <label class="prio p-high"><input type="radio" name="priority"
+                                value="high"><span>High</span></label>
+                    </div>
+                </fieldset>
+
+                <label class="check-row">
+                    <input type="checkbox" name="completed">
+                    <span>Mark as completed</span>
+                </label>
+            </div>
+
+            <div class="modal-foot">
+                <button type="button" class="btn btn-danger" id="editDelete">Delete</button>
+                <span class="spacer"></span>
+                <button type="button" class="btn btn-ghost" data-close>Cancel</button>
+                <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+        </form>
+    </dialog>
+
+    <script src="{{ url_for('static', filename='js/common.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/editor.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/tasks.js') }}"></script>
+
+</body>
+
+</html>
