@@ -21,17 +21,15 @@ plannify/
 ├── app.py                  # Flask routes
 ├── requirements.txt
 ├── templates/
-│   ├── base.html           # layout + side nav
-│   ├── _task_fields.html   # shared task form fields
-│   ├── _edit_modal.html    # edit-task dialog
-│   ├── add_task.html       # 1. add task
+│   ├── index.html           # layout + side nav
+│   ├── add-task.html       # 1. add task
 │   ├── tasks.html          # 2. to-do list
 │   ├── calendar.html       # 3. calendar (month / week / day)
 │   └── settings.html       # 4. theme, mode, font, size
 └── static/
     ├── css/  themes.css · style.css · calendar.css
     └── js/   settings-core.js · common.js · editor.js
-              add_task.js · tasks.js · calendar.js · settings.js
+              add-task.js · tasks.js · calendar.js · settings.js
 ```
 
 ## Adding a theme
