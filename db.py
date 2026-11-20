@@ -105,6 +105,7 @@ INSERT_SQL = (
 def insert_tasks(tasks):
     with connection() as conn:
         with conn.cursor() as cur:
+            cur.setinputsizes(tm=5)  # due_time may be None in the first row
             cur.executemany(INSERT_SQL, [_params(t) for t in tasks])
         conn.commit()
 
